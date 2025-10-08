@@ -4,7 +4,7 @@
   "description": "APP_NAME uygulamasında domain modelleri ve value object'lerin merkezi paketi. Tip güvenli ve yeniden kullanılabilir domain nesneleri sağlar.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "private": false,
+    "private": true,
   "scripts": {
     "test": "jest --passWithNoTests",
 "build": "rimraf --no-glob ./dist && tsc -p tsconfig.json && tsc-alias -p tsconfig.json",

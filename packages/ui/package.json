@@ -4,7 +4,7 @@
   "description": "APP_NAME için UI bileşenleri ve yardımcı fonksiyonları sunar. React ve Next.js ile tip güvenli olarak kullanılabilir.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "private": false,
+    "private": true,
   "scripts": {
     "test": "jest --passWithNoTests",
 "build": "rimraf --no-glob ./dist && tsc -p tsconfig.json && tsc-alias -p tsconfig.json",
@@ -29,7 +29,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ilyasbozdemir/monorepo-template.git.git"
+    "url": "git+https://github.com/ilyasbozdemir/monorepo-template.git"
   },
   "keywords": [
     "core",
@@ -46,9 +46,9 @@
   "author": "ilyasbozdemir.dev",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ilyasbozdemir/monorepo-template.git/issues"
+    "url": "https://github.com/ilyasbozdemir/monorepo-template/issues"
   },
-  "homepage": "https://github.com/ilyasbozdemir/monorepo-template.git?tab=readme-ov-file",
+  "homepage": "https://github.com/ilyasbozdemir/monorepo-template?tab=readme-ov-file",
   "dependencies": {
     "axios": "^1.7.5",
     "pubsub-js": "^1.9.5"

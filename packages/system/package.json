@@ -4,7 +4,7 @@
    "description": "App_Name sisteminde kullanılan core servislerin ve yapıların merkezi yönetimi için paket.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "private": false,
+    "private": true,
   "scripts": {
     "test": "jest --passWithNoTests",
 "build": "rimraf --no-glob ./dist && tsc -p tsconfig.json && tsc-alias -p tsconfig.json",

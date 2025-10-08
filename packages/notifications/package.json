@@ -4,7 +4,7 @@
   "description": "Bildirim yönetimi modülü. Uygulama içi, e-posta veya push bildirimleri merkezi olarak yönetir ve farklı kanallara gönderim sağlar.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "private": false,
+    "private": true,
   "scripts": {
     "test": "jest --passWithNoTests",
 "build": "rimraf --no-glob ./dist && tsc -p tsconfig.json && tsc-alias -p tsconfig.json",

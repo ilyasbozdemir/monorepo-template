@@ -4,7 +4,7 @@
   "description": "Next.js uygulamaları için APP_NAME sunum paketi. Core servisleri, Logs/Errors yönetimini ve API orchestrasyonu sağlar.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "private": false,
+    "private": true,
   "scripts": {
     "test": "jest --passWithNoTests",
 "build": "rimraf --no-glob ./dist && tsc -p tsconfig.json && tsc-alias -p tsconfig.json",

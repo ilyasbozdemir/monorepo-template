@@ -24,7 +24,6 @@
     "@monorepo/geo": "workspace:*",
     "@monorepo/i18n": "workspace:*",
     "@monorepo/jobs": "workspace:*",
-    "@monorepo/logs": "workspace:*",
     "@monorepo/mailer": "workspace:*",
     "@monorepo/metrics": "workspace:*",
     "@monorepo/models": "workspace:*",

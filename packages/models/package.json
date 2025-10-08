@@ -4,7 +4,7 @@
  "description": "Uygulama genelindeki veri modellerini ve tiplerini içerir. Araç, kullanıcı, ilan, fatura gibi modelleri bağımsız şekilde yönetir.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "private": false,
+    "private": true,
   "scripts": {
     "test": "jest --passWithNoTests",
 "build": "rimraf --no-glob ./dist && tsc -p tsconfig.json && tsc-alias -p tsconfig.json",

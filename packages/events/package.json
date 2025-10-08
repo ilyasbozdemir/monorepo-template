@@ -4,7 +4,7 @@
   "description": "App_Name sistemindeki tüm eventleri merkezi olarak yönetmek için kullanılan paket. Hem static event isimlerini tip güvenli sağlar hem de dinamik event emitter/listener mekanizması sunar.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "private": false,
+    "private": true,
   "scripts": {
     "test": "jest --passWithNoTests",
 "build": "rimraf --no-glob ./dist && tsc -p tsconfig.json && tsc-alias -p tsconfig.json",

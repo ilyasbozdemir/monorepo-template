@@ -4,7 +4,7 @@
   "description": "APP_NAME uygulamasında feature flag yönetimi için merkezi paket. Özelliklerin aktif/pasif durumlarını tip güvenli olarak kontrol etmeyi sağlar.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "private": false,
+    "private": true,
   "scripts": {
     "test": "jest --passWithNoTests",
 "build": "rimraf --no-glob ./dist && tsc -p tsconfig.json && tsc-alias -p tsconfig.json",
