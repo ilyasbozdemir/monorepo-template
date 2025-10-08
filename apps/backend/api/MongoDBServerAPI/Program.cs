@@ -121,7 +121,7 @@ builder.Services.AddSwaggerGen(c =>
         new OpenApiSecurityScheme
         {
             Description =
-                "API Key needed to access the endpoints. Example: 'Authorization: GP-LIVE-xxxx'",
+                "API Key needed to access the endpoints. Example: 'Authorization: APP-LIVE-xxxx'",
             In = ParameterLocation.Header,
             Name = "Authorization",
             Type = SecuritySchemeType.ApiKey,

@@ -227,7 +227,7 @@ export default function PageClient() {
 
   const getEnvironmentFromApiKey = (apiKey: string): string => {
     if (
-      apiKey.startsWith("gp-live-") ||
+      apiKey.startsWith("app-live-") ||
       apiKey.toUpperCase().includes("LIVE")
     ) {
       return "Production";

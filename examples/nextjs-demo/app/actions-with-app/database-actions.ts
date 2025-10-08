@@ -14,11 +14,11 @@ import {
   AppApiClientConfig,
 } from "@monorepo/core";
 
-const serverBaseUrl = "http://localhost:58837"
+const serverBaseUrl = "http://localhost:58837";
 
-const apiKey = isStaging
-  ? process.env.MONGO_APIKEY_STAGING!
-  : process.env.MONGO_APIKEY_DEVELOPMENT!;
+const apiKey =
+  process.env.MONGO_APIKEY_DEVELOPMENT! ||
+  "APP-DEVELOPMENT-c416d09c-3c33-4be7-b0ee-0f9230a1a167";
 
 const dbName = isStaging ? "staging-mainappdb" : "mainappdb";
 
@@ -42,7 +42,7 @@ export async function getDatabaseSummaryAction(): Promise<
 }
 
 export async function getDatabaseCollectionDetailsAction(
-  databaseName: string
+  databaseName: string,
 ): Promise<any> {
   const app = new AppApiClient({
     ...gpConfig,
@@ -58,7 +58,7 @@ export async function getDatabaseCollectionDetailsAction(
 }
 
 export async function createDatabaseAction(
-  databaseName: string
+  databaseName: string,
 ): Promise<DatabaseCreateResponse> {
   const app = new AppApiClient({
     ...gpConfig,
@@ -74,7 +74,7 @@ export async function createDatabaseAction(
 
 export async function deleteDatabaseAction(
   databaseName: string,
-  force: boolean = false
+  force: boolean = false,
 ): Promise<DatabaseDeleteResponse> {
   const app = new AppApiClient({
     ...gpConfig,

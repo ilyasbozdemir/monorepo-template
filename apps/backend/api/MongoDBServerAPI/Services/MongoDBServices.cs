@@ -1,8 +1,8 @@
-﻿using MongoDBServerAPI.Exceptions;
-using MongoDBServerAPI.Interfaces;
+﻿using System.Text.Json;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using System.Text.Json;
+using MongoDBServerAPI.Exceptions;
+using MongoDBServerAPI.Interfaces;
 
 namespace MongoDBServerAPI.Services;
 
@@ -22,7 +22,12 @@ public class DatabaseService : IDatabaseService
         return await collection.Find(filter).FirstOrDefaultAsync();
     }
 
-    public async Task<List<Dictionary<string, object>>> GetAllAsync(string dbName, string collectionName, int? page = null, int? size = null)
+    public async Task<List<Dictionary<string, object>>> GetAllAsync(
+        string dbName,
+        string collectionName,
+        int? page = null,
+        int? size = null
+    )
     {
         var collection = _client.GetDatabase(dbName).GetCollection<BsonDocument>(collectionName);
         var totalCount = await collection.CountDocumentsAsync(new BsonDocument());
@@ -33,28 +38,42 @@ public class DatabaseService : IDatabaseService
         var docs = await collection.Find(new BsonDocument()).Skip(skip).Limit(take).ToListAsync();
 
         return docs.Select(d =>
-        {
-            var dict = d.ToDictionary();
-            if (dict.ContainsKey("_id"))
-                dict["_id"] = d["_id"].ToString();
-            return dict;
-        }).ToList();
+            {
+                var dict = d.ToDictionary();
+                if (dict.ContainsKey("_id"))
+                    dict["_id"] = d["_id"].ToString();
+                return dict;
+            })
+            .ToList();
     }
 
-    public async Task<ObjectId> InsertAsync(string dbName, string collectionName, BsonDocument document)
+    public async Task<ObjectId> InsertAsync(
+        string dbName,
+        string collectionName,
+        BsonDocument document
+    )
     {
         var collection = _client.GetDatabase(dbName).GetCollection<BsonDocument>(collectionName);
         await collection.InsertOneAsync(document);
         return document["_id"].AsObjectId;
     }
 
-    public async Task InsertManyAsync(string dbName, string collectionName, IEnumerable<BsonDocument> documents)
+    public async Task InsertManyAsync(
+        string dbName,
+        string collectionName,
+        IEnumerable<BsonDocument> documents
+    )
     {
         var collection = _client.GetDatabase(dbName).GetCollection<BsonDocument>(collectionName);
         await collection.InsertManyAsync(documents);
     }
 
-    public async Task<long> UpdateAsync(string dbName, string collectionName, string id, BsonDocument updateData)
+    public async Task<long> UpdateAsync(
+        string dbName,
+        string collectionName,
+        string id,
+        BsonDocument updateData
+    )
     {
         var collection = _client.GetDatabase(dbName).GetCollection<BsonDocument>(collectionName);
         var filter = Builders<BsonDocument>.Filter.Eq("_id", ObjectId.Parse(id));
@@ -71,7 +90,11 @@ public class DatabaseService : IDatabaseService
         return result.DeletedCount;
     }
 
-    public async Task<List<Dictionary<string, object>>> AggregateAsync(string dbName, string collectionName, JsonElement body)
+    public async Task<List<Dictionary<string, object>>> AggregateAsync(
+        string dbName,
+        string collectionName,
+        JsonElement body
+    )
     {
         if (body.ValueKind != JsonValueKind.Array)
             throw new ApiException("Pipeline JSON array olmalı", 400);
@@ -89,13 +112,15 @@ public class DatabaseService : IDatabaseService
             var collection = database.GetCollection<BsonDocument>(collectionName);
             var results = await collection.Aggregate(pipelineDef).ToListAsync();
 
-            return results.Select(d =>
-            {
-                var dict = d.ToDictionary();
-                if (dict.ContainsKey("_id"))
-                    dict["_id"] = d["_id"].ToString();
-                return dict;
-            }).ToList();
+            return results
+                .Select(d =>
+                {
+                    var dict = d.ToDictionary();
+                    if (dict.ContainsKey("_id"))
+                        dict["_id"] = d["_id"].ToString();
+                    return dict;
+                })
+                .ToList();
         }
         catch (MongoException ex)
         {
@@ -105,11 +130,7 @@ public class DatabaseService : IDatabaseService
         {
             throw new ApiException($"Beklenmeyen hata: {ex.Message}", 500, ex);
         }
-
-
-
     }
-
 }
 
 public class DatabaseAdminService : IDatabaseAdminService
