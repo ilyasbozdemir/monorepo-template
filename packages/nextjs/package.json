@@ -1,0 +1,79 @@
+{
+  "name": "@monorepo/nextjs",
+  "version": "1.0.0",
+  "description": "Next.js uygulamaları için APP_NAME sunum paketi. Core servisleri, Logs/Errors yönetimini ve API orchestrasyonu sağlar.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "private": false,
+  "scripts": {
+    "test": "jest --passWithNoTests",
+"build": "rimraf --no-glob ./dist && tsc -p tsconfig.json && tsc-alias -p tsconfig.json",
+
+
+    "build:publish": "pnpm run build && pnpm run publish:private",
+    "deploy": "tsx scripts/deploy.ts"
+  },
+  "publishConfig": {
+    "registry": "https://registry.ilyasbozdemir.dev"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ilyasbozdemir/monorepo-template.git.git"
+  },
+  "keywords": [
+    "core",
+    "shared",
+    "module",
+    "common",
+    "services",
+    "mongodb",
+    "typescript",
+    "utilities",
+    "react",
+    "nextjs"
+  ],
+  "author": "ilyasbozdemir.dev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ilyasbozdemir/monorepo-template.git/issues"
+  },
+  "homepage": "https://github.com/ilyasbozdemir/monorepo-template.git?tab=readme-ov-file",
+  "dependencies": {
+    "@monorepo/core": "workspace:*",
+    "axios": "^1.7.5",
+    "pubsub-js": "^1.9.5"
+  },
+  "peerDependencies": {
+    "next": ">=13",
+    "react": ">=18",
+    "swiper": "^10.0.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "@types/node": "^22.5.0",
+    "@types/pubsub-js": "^1.8.6",
+    "@types/react": "^19.1.13",
+    "execa": "^9.6.0",
+    "jest": "^29.7.0",
+    "react": "^19.1.1",
+    "rimraf": "^6.0.1",
+    "ts-jest": "^29.2.5",
+    "tsc-alias": "^1.8.16"
+  },
+  "engines": {
+    "node": ">=22.11.0",
+    "pnpm": ">=10.12.4"
+  },
+  "engineStrict": true
+}

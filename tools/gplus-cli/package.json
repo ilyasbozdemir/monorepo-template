@@ -1,0 +1,12 @@
+{
+  "name": "appname-cli",
+  "version": "1.0.0",
+  "type": "module",
+  "bin": {
+    "appname": "index.js"
+  },
+  "dependencies": {
+    "commander": "^10.0.0",
+    "inquirer": "^9.0.0"
+  }
+}

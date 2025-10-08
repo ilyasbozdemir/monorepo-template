@@ -1,0 +1,14 @@
+services:
+  web:
+    build: .
+    container_name: mongodbserver-api
+    ports:
+      - "58837:58837"
+    environment:
+      ASPNETCORE_URLS: "http://+:58837"
+      ASPNETCORE_ENVIRONMENT: "Staging"
+    networks:
+      - app-network 
+networks:
+  app-network:
+    name: mainapp-network

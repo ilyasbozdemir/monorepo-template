@@ -1,0 +1,34 @@
+version: "3.8"
+
+services:
+  mongodb:
+    build:
+      context: ./apps/backend/mongodb
+      dockerfile: Dockerfile  # Eğer özel bir Dockerfile ismi yoksa bunu silebilirsin
+    container_name: mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: secret
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+  api:
+    build:
+      context: ./apps/backend/api/MongoDBServerAPI
+      dockerfile: Dockerfile
+    container_name: backend-api
+    restart: unless-stopped
+    depends_on:
+      - mongodb
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:58837
+      MONGO_CONNECTION_STRING: "mongodb://admin:secret@mongodb:27017"
+    ports:
+      - "58837:58837"
+
+volumes:
+  mongodb_data:

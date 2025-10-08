@@ -1,0 +1,30 @@
+# Build stage
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /app
+
+COPY *.csproj ./
+RUN dotnet restore
+
+COPY . ./
+RUN dotnet publish -c Release -o out
+
+# Runtime stage
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
+WORKDIR /app
+COPY --from=build /app/out ./
+
+# Startup script kopyala ve çalıştırılabilir yap
+# COPY startup.sh .
+# RUN chmod +x startup.sh
+
+
+# LaunchSettings portları
+EXPOSE 58837
+EXPOSE 58836
+
+# Kestrel'in tüm host interface'lerinde dinlemesi
+#ENV ASPNETCORE_URLS=http://+:58837;https://+:58836
+ENV ASPNETCORE_URLS=http://+:58837
+ENV ASPNETCORE_ENVIRONMENT=Production
+
+ENTRYPOINT ["dotnet", "MongoDBServerAPI.dll"]

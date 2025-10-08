@@ -1,0 +1,32 @@
+| Paket Adı                  | Açıklama                                                                                                                                       | Paket Adı                    | Kapsam      |
+| -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------- | ----------- |
+| @monorepo/admin         | Admin yetkili SDK, rol ve izin yönetimi merkezi yönetim                                                                                        | admin         | server-only |
+| @monorepo/core          | Lightweight: tipler, util’ler, request/response modelleri                                                                                      | core          | server-only |
+| @monorepo/models        | Sadece db modelleri entity’ler, aggregate’ler                                                                                                  | domain        | dual        |
+| @monorepo/app           | Application-level client/servisler (AppApiClient, getDatabase gibi)                                                                    | app           | server-only |
+| @monorepo/services      | Uygulama seviyesi iş mantığı servisleri. DTO’ları alır, parçalar, DB’ye insert/update yapar ve join gibi işlemleri kendi içinde gerçekleştirir | services      | server-only |
+| @monorepo/auth          | Login, register, JWT, OAuth, rol bazlı erişim                                                                                                  | auth          | dual        |
+| @monorepo/storage       | Dosya upload/download, CDN, thumbnail, blob storage                                                                                            | storage       | server-only |
+| @monorepo/nextjs        | Orchestrasyon,                                                                                                                                 | client-only   |server-only  |
+| @monorepo/apifront      | Backend API endpoint’lerini temsil eden frontend adapter paketi. API çağrılarını yönetir ve pipeline’a dahil eder                              | apifront      | client-only |
+| @monorepo/realtime      | WebSocket, pub/sub, anlık veri ve presence                                                                                                     | realtime      | dual        |
+| @monorepo/notifications | Email, push, SMS, in-app notification                                                                                                          | notifications | dual        |
+| @monorepo/mailer        | Mail gönderim, şablon, tracking pixel                                                                                                          | mailer        | server-only |
+| @monorepo/analytics     | Event tracking, funnel, conversion, GA / Pixel adapter                                                                                         | analytics     | dual        |
+| @monorepo/errors        | Sentry/Rollbar loglama, exception handling                                                                                                     | errors        | server-only |
+| @monorepo/ui            | Ortak komponentler, theme provider, design system                                                                                              | ui            | client-only |
+| @monorepo/search        | Full-text arama, filter, sort, search provider adapter                                                                                         | search        | dual        |
+| @monorepo/payments      | Stripe, PayPal, Iyzico, recurring payments, lisans yönetimi                                                                                    | payments      | server-only |
+| @monorepo/geo           | Koordinat, distance, harita API adapter, il/ilçe tabloları                                                                                     | geo           | dual        |
+| @monorepo/logs          | Distributed logging, central log management                                                                                                    | logs          | server-only |
+| @monorepo/jobs          | Background tasks, async jobs, cron scheduler                                                                                                   | jobs          | server-only |
+| @monorepo/config        | Env, secrets, TOML/JSON abstraction, merkezi config                                                                                            | config        | server-only |
+| @monorepo/ai            | Opsiyonel: öneri motoru, ML pipeline, personalisation                                                                                          | ai            | server-only |
+| @monorepo/cache         | Redis/memory cache adapter, hızlı data access için                                                                                             | cache         | server-only |
+| @monorepo/i18n          | Çoklu dil ve lokalizasyon desteği                                                                                                              | i18n          | dual        |
+| @monorepo/security      | Rate limiting, XSS/CSRF koruma, audit log                                                                                                      | security      | server-only |
+| @monorepo/webhooks      | Üçüncü taraf sistemlerle event-based entegrasyon                                                                                               | webhooks      | server-only |
+| @monorepo/templates     | Mail / PDF / document template manager                                                                                                         | templates     | server-only |
+| @monorepo/bots          | Chatbot / notification botları, otomatik görevler                                                                                              | bots          | server-only |
+| @monorepo/metrics       | Performance monitoring, API latency, uptime                                                                                                    | metrics       | server-only |
+| @monorepo/feature-flags | Feature toggle yönetimi                                                                                                                        | featureflags  | server-only |
