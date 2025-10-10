@@ -155,7 +155,7 @@ export default function AuthPage() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold flex items-center gap-2">
-              <Shield className="h-8 w-8 text-blue-600" />
+              <Shield className="h-8 w-8 text-orange-600" />
               Authentik Kimlik Yönetimi
             </h1>
             <p className="text-muted-foreground mt-1">
@@ -271,8 +271,8 @@ export default function AuthPage() {
                         className="flex items-center justify-between p-4 border rounded-lg hover:bg-accent/50 transition-colors"
                       >
                         <div className="flex items-center gap-4">
-                          <div className="h-10 w-10 rounded-lg bg-blue-100 flex items-center justify-center">
-                            <Layers className="h-5 w-5 text-blue-600" />
+                          <div className="h-10 w-10 rounded-lg bg-orange-100 flex items-center justify-center">
+                            <Layers className="h-5 w-5 text-orange-600" />
                           </div>
                           <div>
                             <div className="font-semibold">{app.name}</div>

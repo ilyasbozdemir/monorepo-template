@@ -296,7 +296,7 @@ export default function BackupManagementPage() {
       case "completed":
         return <CheckCircle className="h-4 w-4 text-green-500" />
       case "running":
-        return <Clock className="h-4 w-4 text-blue-500 animate-spin" />
+        return <Clock className="h-4 w-4 text-orange-500 animate-spin" />
       case "failed":
         return <XCircle className="h-4 w-4 text-red-500" />
       case "scheduled":
@@ -307,7 +307,7 @@ export default function BackupManagementPage() {
   const getStatusBadge = (status: BackupItem["status"]) => {
     const variants = {
       completed: "bg-green-100 text-green-800",
-      running: "bg-blue-100 text-blue-800",
+      running: "bg-orange-100 text-orange-800",
       failed: "bg-red-100 text-red-800",
       scheduled: "bg-yellow-100 text-yellow-800",
     }
@@ -328,7 +328,7 @@ export default function BackupManagementPage() {
       case "GET":
         return "bg-green-100 text-green-800"
       case "POST":
-        return "bg-blue-100 text-blue-800"
+        return "bg-orange-100 text-orange-800"
       case "PUT":
         return "bg-yellow-100 text-yellow-800"
       case "DELETE":
@@ -554,7 +554,7 @@ export default function BackupManagementPage() {
                 <div key={source.id} className="flex items-center justify-between p-3 border rounded-lg">
                   <div className="flex items-center gap-3">
                     <div
-                      className={`w-3 h-3 rounded-full ${source.type === "mongodb" ? "bg-green-500" : source.type === "postgresql" ? "bg-blue-500" : "bg-orange-500"}`}
+                      className={`w-3 h-3 rounded-full ${source.type === "mongodb" ? "bg-green-500" : source.type === "postgresql" ? "bg-orange-500" : "bg-orange-500"}`}
                     />
                     <div>
                       <p className="font-medium">{source.name}</p>
@@ -644,7 +644,7 @@ export default function BackupManagementPage() {
                       </Button>
                     </div>
                     <div className="bg-black text-green-400 p-3 rounded font-mono text-sm">
-                      <span className="text-blue-400">GET</span> {apiConsoleUrl}
+                      <span className="text-orange-400">GET</span> {apiConsoleUrl}
                     </div>
                     <div className="mt-3 text-sm text-muted-foreground">
                       Selected: <strong>{selectedTable}</strong> from {databases.find((d) => d.enabled)?.name}
@@ -677,7 +677,7 @@ export default function BackupManagementPage() {
                         <div
                           key={index}
                           className={`p-3 border rounded-lg cursor-pointer transition-colors ${
-                            selectedEndpoint === endpoint ? "bg-blue-50 border-blue-200" : "hover:bg-gray-50"
+                            selectedEndpoint === endpoint ? "bg-orange-50 border-orange-200" : "hover:bg-gray-50"
                           }`}
                           onClick={() => setSelectedEndpoint(endpoint)}
                         >
@@ -716,7 +716,7 @@ export default function BackupManagementPage() {
                             selectedEndpoint.method === "GET"
                               ? "text-green-400"
                               : selectedEndpoint.method === "POST"
-                                ? "text-blue-400"
+                                ? "text-orange-400"
                                 : selectedEndpoint.method === "PUT"
                                   ? "text-yellow-400"
                                   : "text-red-400"
@@ -771,7 +771,7 @@ export default function BackupManagementPage() {
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Çalışıyor</CardTitle>
-              <Clock className="h-4 w-4 text-blue-500" />
+              <Clock className="h-4 w-4 text-orange-500" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{backups.filter((b) => b.status === "running").length}</div>
@@ -1155,8 +1155,8 @@ export default function BackupManagementPage() {
                   </SelectContent>
                 </Select>
               </div>
-              <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
-                <p className="text-sm text-blue-800">
+              <div className="p-3 bg-orange-50 border border-orange-200 rounded-lg">
+                <p className="text-sm text-orange-800">
                   <strong>Basit Yapılandırma:</strong> Bağlantı URL'lerini doğrudan arayüzden düzenleyebilir ve test
                   edebilirsiniz.
                 </p>

@@ -28,6 +28,7 @@ import {
   Code,
   Cloud,
   Shield,
+  Plug,
 } from "lucide-react";
 import Link from "next/link";
 import {
@@ -148,6 +149,8 @@ export function DatabaseLayout({ children }: DatabaseLayoutProps) {
     { title: "Realtime & Webhooks", icon: Activity, path: "/realtime" },
     { title: "Kimlik Yönetimi", icon: Shield, path: "/auth" },
     { title: "Depolama Yönetimi", icon: Cloud, path: "/storage" },
+    { title: "Entegrasyonlar", icon: Plug, path: "/integrations" },
+    { title: "API Gateway", icon: Activity, path: "/api-gateway" },
     { title: "Araçlar", icon: null, path: null, isHeader: true },
     { title: "Analitik", icon: BarChart3, path: "/analytics" },
     { title: "Aktivite Günlüğü", icon: Activity, path: "/activity" },

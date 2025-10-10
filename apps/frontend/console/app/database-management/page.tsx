@@ -1,18 +1,12 @@
-"use client";
-
 import { DatabaseLayout } from "@/components/database/DatabaseLayout";
-import React from "react";
 
-interface PageClientProps {
-  //
-}
+import PageClient from "./page.client";
 
-const PageClient: React.FC<PageClientProps> = ({}) => {
+
+export default async function Page() {
   return (
     <DatabaseLayout>
-      <></>
+      <PageClient />
     </DatabaseLayout>
   );
-};
-
-export default PageClient;
+}
