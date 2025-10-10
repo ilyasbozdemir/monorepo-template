@@ -29,11 +29,7 @@ import {
   isDevelopment,
 } from "@monorepo/core";
 
-import {
-  AppApiClient,
-  getDatabase,
-  getDatabaseAdmin,
-} from "@monorepo/app";
+import { AppApiClient, getDatabase, getDatabaseAdmin } from "@monorepo/app";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -47,8 +43,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 
-const serverBaseUrl = "http://localhost:58837"
-
+const serverBaseUrl = "http://localhost:58837";
 
 const apiKey = isStaging
   ? process.env.MONGO_APIKEY_STAGING!
@@ -134,20 +129,20 @@ export default function PageClient() {
 
   const [search, setSearch] = useState("");
   const filteredDatabases = mockDatabases.filter((db) =>
-    db.toLowerCase().includes(search.toLowerCase())
+    db.toLowerCase().includes(search.toLowerCase()),
   );
 
   const [selectedCollection, setSelectedCollection] = useState<string | null>(
-    ""
+    "",
   );
   const [searchCollection, setSearchCollection] = useState("");
   const filteredCollections = mockCollections.filter((c) =>
-    c.toLowerCase().includes(searchCollection.toLowerCase())
+    c.toLowerCase().includes(searchCollection.toLowerCase()),
   );
 
   const switchDatabase = (databaseId: string) => {
     setDatabases((prev) =>
-      prev.map((db) => ({ ...db, active: db.id === databaseId }))
+      prev.map((db) => ({ ...db, active: db.id === databaseId })),
     );
     setSelectedDatabase(databaseId);
     setSelectedCollection(null);
@@ -202,7 +197,7 @@ export default function PageClient() {
 
   const handleCreateCollection = async (
     dbName: string,
-    collectionName: string
+    collectionName: string,
   ) => {
     try {
       setLoading(true);
@@ -227,7 +222,7 @@ export default function PageClient() {
 
   const handleDeleteCollection = async (
     dbName: string,
-    collectionName: string
+    collectionName: string,
   ) => {
     try {
       setLoading(true);
@@ -324,7 +319,7 @@ export default function PageClient() {
         {
           price: { amount: 125000 },
           status: "active",
-        }
+        },
       );
 
       setLoading(false);
@@ -360,7 +355,7 @@ export default function PageClient() {
       });
 
       const deletedCount: number | any = await carlistingsCollection.delete(
-        inserted?.id
+        inserted?.id,
       );
 
       setLoading(false);
@@ -484,8 +479,8 @@ export default function PageClient() {
                   db.disabled
                     ? "bg-gray-100 border-gray-300 cursor-not-allowed opacity-60"
                     : db.active
-                    ? "bg-primary/10 border-primary shadow-sm cursor-pointer"
-                    : "hover:bg-muted border-border cursor-pointer"
+                      ? "bg-primary/10 border-primary shadow-sm cursor-pointer"
+                      : "hover:bg-muted border-border cursor-pointer"
                 }`}
                 onClick={() => !db.disabled && switchDatabase(db.id)}
               >
@@ -573,7 +568,7 @@ export default function PageClient() {
                         .filter((db) =>
                           db
                             .toLowerCase()
-                            .includes(newDatabaseName.toLowerCase())
+                            .includes(newDatabaseName.toLowerCase()),
                         )
                         .map((db) => (
                           <SelectItem key={db} value={db}>
@@ -739,7 +734,7 @@ export default function PageClient() {
                           .filter((db) =>
                             db
                               .toLowerCase()
-                              .includes(newDatabaseName.toLowerCase())
+                              .includes(newDatabaseName.toLowerCase()),
                           )
                           .map((db) => (
                             <SelectItem key={db} value={db}>
@@ -925,7 +920,7 @@ export default function PageClient() {
                 {JSON.stringify(
                   result?.data ?? result?.message ?? result,
                   null,
-                  2
+                  2,
                 )}
               </pre>
             </Card>
