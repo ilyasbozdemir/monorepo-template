@@ -2,7 +2,7 @@
 
 import type React from "react";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -29,6 +29,8 @@ import {
   Cloud,
   Shield,
   Plug,
+  Server,
+  Zap,
 } from "lucide-react";
 import Link from "next/link";
 import {
@@ -80,6 +82,29 @@ export function DatabaseLayout({ children }: DatabaseLayoutProps) {
   const [targetCollection, setTargetCollection] = useState("");
   const [importMode, setImportMode] = useState("replace");
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const [showHeader, setShowHeader] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > lastScrollY && currentScrollY > 50) {
+        setShowHeader(false);
+      } else {
+        setShowHeader(true);
+      }
+
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [lastScrollY]);
 
   const userProfile = {
     name: "Admin",
@@ -136,24 +161,25 @@ export function DatabaseLayout({ children }: DatabaseLayoutProps) {
   ];
 
   const navItems = [
-    { title: "Dashboard", icon: Database, path: "/" },
+    { title: "Genel Bakış", icon: null, path: null, isHeader: true },
+    { title: "Genel Bakış", icon: Database, path: "/" },
     {
       title: "Veritabanı Yönetimi",
       icon: HardDrive,
       path: "/database-management",
     },
+    { title: "Kimlik Yönetimi", icon: Shield, path: "/auth" },
+    { title: "Realtime & Webhooks", icon: Zap, path: "/realtime" },
+    { title: "API Gateway", icon: Server, path: "/api-gateway" },
     { title: "Yedekleme Yönetimi", icon: HardDrive, path: "/backup" },
-    { title: "API Metadata", icon: FileText, path: "/api-metadata" },
+    { title: "Aktivite Günlüğü", icon: Activity, path: "/activity" },
     { title: "Geliştirici", icon: null, path: null, isHeader: true },
     { title: "SDK & Kod Örnekleri", icon: Code, path: "/sdk-examples" },
-    { title: "Realtime & Webhooks", icon: Activity, path: "/realtime" },
-    { title: "Kimlik Yönetimi", icon: Shield, path: "/auth" },
+    { title: "API Metadata", icon: FileText, path: "/api-metadata" },
     { title: "Depolama Yönetimi", icon: Cloud, path: "/storage" },
     { title: "Entegrasyonlar", icon: Plug, path: "/integrations" },
-    { title: "API Gateway", icon: Activity, path: "/api-gateway" },
     { title: "Araçlar", icon: null, path: null, isHeader: true },
     { title: "Analitik", icon: BarChart3, path: "/analytics" },
-    { title: "Aktivite Günlüğü", icon: Activity, path: "/activity" },
     { title: "Ayarlar", icon: Settings, path: "/settings" },
   ];
 
@@ -249,7 +275,7 @@ export function DatabaseLayout({ children }: DatabaseLayoutProps) {
 
   return (
     <div className="flex min-h-screen bg-background">
-      <div className="hidden md:flex w-64 bg-card border-r border-gray-200 flex-col h-screen fixed left-0 top-0 z-10">
+      <aside className="hidden md:flex w-64 bg-card border-r border-gray-200 flex-col h-screen fixed left-0 top-0 z-10">
         <div className="p-4 border-b border-gray-200 flex items-center">
           <div className="flex items-center mr-2 justify-center w-8 h-8 rounded-full bg-primary text-primary-foreground font-bold text-xs">
             Logo
@@ -260,20 +286,6 @@ export function DatabaseLayout({ children }: DatabaseLayoutProps) {
               Veritabanı Yöneticisi
             </p>
           </div>
-        </div>
-
-        <div className="p-3">
-          <form onSubmit={handleSearch}>
-            <div className="relative">
-              <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Koleksiyonlarda ara..."
-                className="pl-8 bg-muted border-gray-200"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </div>
-          </form>
         </div>
 
         <nav className="flex-1 overflow-y-auto">
@@ -368,7 +380,7 @@ export function DatabaseLayout({ children }: DatabaseLayoutProps) {
             <div className="mt-1">MongoDB via .NET API</div>
           </div>
         </div>
-      </div>
+      </aside>
 
       <div
         className={`${
@@ -503,6 +515,10 @@ export function DatabaseLayout({ children }: DatabaseLayoutProps) {
       )}
 
       <div className="flex-1 flex flex-col md:ml-64">
+        {/*
+     HEADER
+  */}
+
         <header className="bg-card border-b border-gray-200 h-14 flex items-center px-4 md:px-6 justify-between">
           <button
             className="md:hidden mr-2"
@@ -525,7 +541,7 @@ export function DatabaseLayout({ children }: DatabaseLayoutProps) {
           </button>
           <h1 className="text-lg font-semibold text-foreground">
             {navItems.find((item) => item.path === pathname)?.title ||
-              "Dashboard"}
+              "Genel Bakış"}
           </h1>
           <div className="flex items-center space-x-2 md:space-x-3 overflow-x-auto">
             <Button
@@ -700,7 +716,7 @@ export function DatabaseLayout({ children }: DatabaseLayoutProps) {
               variant="outline"
               onClick={() =>
                 window.open(
-                  "https://localhost:7149/swagger/v1/swagger.json",
+                  "http://localhost:58837/swagger/index.html",
                   "_blank",
                 )
               }
@@ -710,13 +726,16 @@ export function DatabaseLayout({ children }: DatabaseLayoutProps) {
             </Button>
           </div>
 
-          <DialogFooter className="sm:justify-between">
+          <DialogFooter className="sm:justify-between mt-2">
             <div className="text-sm text-muted-foreground">
               Son {apiRequests.length} istek gösteriliyor
             </div>
-            <Button variant="outline" onClick={() => setShowApiConsole(false)}>
-              Kapat
-            </Button>
+            <Link
+              href="/api-gateway"
+              className="text-sm text-blue-600 hover:underline"
+            >
+              Daha fazlasını gör
+            </Link>
           </DialogFooter>
         </DialogContent>
       </Dialog>

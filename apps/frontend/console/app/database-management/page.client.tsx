@@ -451,7 +451,7 @@ const PageClient: React.FC<PageClientProps> = ({}) => {
                   MongoDB Yönetim Paneli
                 </h1>
                 <p className="text-sm text-muted-foreground">
-                  Koleksiyon ve belge yönetimi, DTO işlemleri
+                  Koleksiyon, Koleksiyon ve belge yönetimi
                 </p>
               </div>
             </div>
@@ -484,30 +484,7 @@ const PageClient: React.FC<PageClientProps> = ({}) => {
                   </div>
                 </DialogContent>
               </Dialog>
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button variant="outline" size="sm">
-                    <Settings className="h-4 w-4 mr-1" />
-                    API Ayarları
-                  </Button>
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>Veritabanı Ayarları</DialogTitle>
-                  </DialogHeader>
-                  <div className="space-y-4">
-                    <div className="space-y-4">
-                      <ApiSetting /> {
-                        /*
-                        
-                        burda state ile sayfaya baglıycaz daha
-
-                        */
-                      }
-                    </div>
-                  </div>
-                </DialogContent>
-              </Dialog>
+          
             </div>
           </div>
         </div>

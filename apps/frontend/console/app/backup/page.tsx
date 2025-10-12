@@ -82,7 +82,7 @@ interface SwaggerEndpoint {
   parameters?: any[]
 }
 
-const API_BASE = "https://localhost:7149/api/MongoDbBackup"
+const API_BASE = "http://localhost:58837/api/MongoDbBackup"
 
 const fetchDatabases = async () => {
   try {
@@ -264,7 +264,7 @@ export default function BackupManagementPage() {
   ])
 
   const [swaggerData, setSwaggerData] = useState<SwaggerEndpoint[]>([])
-  const [swaggerUrl, setSwaggerUrl] = useState("https://localhost:7149/swagger/v1/swagger.json")
+  const [swaggerUrl, setSwaggerUrl] = useState("http://localhost:58837/swagger/v1/swagger.json")
   const [loadingSwagger, setLoadingSwagger] = useState(false)
   const [selectedEndpoint, setSelectedEndpoint] = useState<SwaggerEndpoint | null>(null)
 
