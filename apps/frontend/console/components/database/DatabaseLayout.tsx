@@ -7,39 +7,39 @@ import { usePathname } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
-  Search,
-  Database,
-  Settings,
-  RefreshCw,
-  Download,
-  Upload,
-  Bell,
   Activity,
+  AlertTriangle,
   BarChart3,
-  HardDrive,
-  User,
-  LogOut,
+  Bell,
+  CheckCircle,
   ChevronDown,
+  Cloud,
+  Code,
+  Database,
+  Download,
   ExternalLink,
   FileText,
-  CheckCircle,
-  AlertTriangle,
-  Plus,
-  Code,
-  Cloud,
-  Shield,
+  HardDrive,
+  LogOut,
   Plug,
+  Plus,
+  RefreshCw,
+  Search,
   Server,
+  Settings,
+  Shield,
+  Upload,
+  User,
   Zap,
 } from "lucide-react";
 import Link from "next/link";
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
-  DialogTitle,
   DialogDescription,
   DialogFooter,
+  DialogHeader,
+  DialogTitle,
 } from "@/components/ui/dialog";
 import {
   DropdownMenu,
@@ -163,12 +163,9 @@ export function DatabaseLayout({ children }: DatabaseLayoutProps) {
   const navItems = [
     { title: "Genel Bakış", icon: null, path: null, isHeader: true },
     { title: "Genel Bakış", icon: Database, path: "/" },
-    {
-      title: "Veritabanı Yönetimi",
-      icon: HardDrive,
-      path: "/database-management",
-    },
+    { title: "Veritabanı Yönetimi", icon: HardDrive, path: "/database" },
     { title: "Kimlik Yönetimi", icon: Shield, path: "/auth" },
+    { title: "Depolama Yönetimi", icon: Cloud, path: "/storage" },
     { title: "Realtime & Webhooks", icon: Zap, path: "/realtime" },
     { title: "API Gateway", icon: Server, path: "/api-gateway" },
     { title: "Yedekleme Yönetimi", icon: HardDrive, path: "/backup" },
@@ -176,7 +173,6 @@ export function DatabaseLayout({ children }: DatabaseLayoutProps) {
     { title: "Geliştirici", icon: null, path: null, isHeader: true },
     { title: "SDK & Kod Örnekleri", icon: Code, path: "/sdk-examples" },
     { title: "API Metadata", icon: FileText, path: "/api-metadata" },
-    { title: "Depolama Yönetimi", icon: Cloud, path: "/storage" },
     { title: "Entegrasyonlar", icon: Plug, path: "/integrations" },
     { title: "Araçlar", icon: null, path: null, isHeader: true },
     { title: "Analitik", icon: BarChart3, path: "/analytics" },
@@ -251,7 +247,9 @@ export function DatabaseLayout({ children }: DatabaseLayoutProps) {
         const message =
           importType === "new"
             ? `Yeni koleksiyon oluşturuldu ve ${recordCount} kayıt eklendi!`
-            : `Mevcut koleksiyona ${recordCount} kayıt ${importMode === "replace" ? "değiştirilerek" : "eklenerek"} aktarıldı!`;
+            : `Mevcut koleksiyona ${recordCount} kayıt ${
+                importMode === "replace" ? "değiştirilerek" : "eklenerek"
+              } aktarıldı!`;
 
         alert(message);
         setShowImportModal(false);

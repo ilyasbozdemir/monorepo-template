@@ -66,6 +66,13 @@ import { DatabaseDeleteResponse } from "@monorepo/apifront";
 
 import { DatabaseSummary } from "@monorepo/core";
 import ApiSetting from "./components/api-settings";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface PageClientProps {
   //
@@ -120,6 +127,12 @@ const PageClient: React.FC<PageClientProps> = ({}) => {
   const [selectedDb, setSelectedDb] = useState<string>("");
   const [selectedDocument, setSelectedDocument] = useState<any | null>(null);
   const [selectedCollection, setSelectedCollection] = useState<string>("");
+
+  const [page, setPage] = useState(1);
+  const [size, setSize] = useState(20);
+  const [totalCount, setTotalCount] = useState(0);
+  const [isPrevious, setIsPrevious] = useState(false);
+  const [isNext, setIsNext] = useState(false);
 
   const [documents, setDocuments] = useState<DocsState>({
     documents: [],
@@ -230,9 +243,18 @@ const PageClient: React.FC<PageClientProps> = ({}) => {
     try {
       setError(null);
 
-      const docs: any = await getDocumentsAction(selectedDb, collectionName);
+      const docs: any = await getDocumentsAction(
+        selectedDb,
+        collectionName,
+        page,
+        size,
+      );
 
       setDocuments(docs.data ?? { documents: [], total: 0 });
+
+      setTotalCount(docs.totalCount);
+      setIsPrevious(docs.isPrevious);
+      setIsNext(docs.isNext);
 
       setSelectedCollection(collectionName);
     } catch (error) {
@@ -484,7 +506,6 @@ const PageClient: React.FC<PageClientProps> = ({}) => {
                   </div>
                 </DialogContent>
               </Dialog>
-          
             </div>
           </div>
         </div>
@@ -839,10 +860,7 @@ const PageClient: React.FC<PageClientProps> = ({}) => {
                 <div className="flex justify-between items-center">
                   <h2 className="text-2xl font-bold">
                     {selectedDb}.{selectedCollection} içindeki Belgeler (
-                    {Array.isArray(documents) &&
-                      documents.length > 0 &&
-                      documents.length}
-                    )
+                    {totalCount})
                   </h2>
                   <Dialog>
                     <DialogTrigger asChild>
@@ -1027,6 +1045,60 @@ const PageClient: React.FC<PageClientProps> = ({}) => {
                         </CardContent>
                       </Card>
                     ))}
+                </div>
+
+                <div className="flex justify-between items-center mt-4">
+                  {/* Pagination Buttons */}
+                  <div className="flex gap-2">
+                    <Button
+                      disabled={!isPrevious}
+                      onClick={() => {
+                        setPage(page - 1);
+                        loadDocuments(selectedCollection!);
+                      }}
+                      variant="outline"
+                      size="sm"
+                    >
+                      Önceki
+                    </Button>
+                    <Button
+                      disabled={!isNext}
+                      onClick={() => {
+                        setPage(page + 1);
+                        loadDocuments(selectedCollection!);
+                      }}
+                      variant="outline"
+                      size="sm"
+                    >
+                      Sonraki
+                    </Button>
+                  </div>
+
+                  {/* Page Size Selector */}
+                  <div className="flex items-center gap-2">
+                    <Label htmlFor="pageSize" className="text-sm font-medium">
+                      Sayfa boyutu:
+                    </Label>
+                    <Select
+                      value={size.toString()}
+                      onValueChange={(val) => {
+                        setSize(Number(val));
+                        setPage(1); // sayfa boyutu değişince başa dön
+                        loadDocuments(selectedCollection!);
+                      }}
+                    >
+                      <SelectTrigger className="w-20">
+                        <SelectValue placeholder="Seç" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {[5, 10, 20, 50, 100].map((s) => (
+                          <SelectItem key={s} value={s.toString()}>
+                            {s}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
               </div>
             </>

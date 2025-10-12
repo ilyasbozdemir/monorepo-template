@@ -337,4 +337,161 @@ public class CollectionManagementController : ControllerBase
         var result = await collection.DeleteOneAsync(filter);
         return Ok(result.DeletedCount);
     }
+
+
+
+    // Validator ekle/güncelle
+    [HttpPost("{collectionName}/validator")]
+    public IActionResult SetValidator(
+        [FromQuery] string dbName,
+        string collectionName,
+        [FromBody] JsonElement schema
+    )
+    {
+        var database = _client.GetDatabase(dbName);
+
+        var command = new BsonDocument
+    {
+        { "collMod", collectionName },
+        { "validator", BsonDocument.Parse(schema.ToString()) },
+        { "validationLevel", "strict" },
+        { "validationAction", "error" }
+    };
+
+        try
+        {
+            database.RunCommand<BsonDocument>(command);
+            return Ok(new { Success = true, Message = "Validator applied successfully." });
+        }
+        catch (MongoCommandException ex) when (ex.Message.Contains("NamespaceNotFound"))
+        {
+            return NotFound(new { Success = false, Message = $"Collection '{collectionName}' not found." });
+        }
+        catch (Exception e)
+        {
+            return BadRequest(new { Success = false, Message = e.Message });
+        }
+    }
+
+    // Mevcut validator'u getir
+    [HttpGet("{collectionName}/validator")]
+    public IActionResult GetValidator([FromQuery] string dbName, string collectionName)
+    {
+        var database = _client.GetDatabase(dbName);
+
+        var collectionInfo = database.ListCollections(new ListCollectionsOptions
+        {
+            Filter = Builders<BsonDocument>.Filter.Eq("name", collectionName)
+        }).FirstOrDefault();
+
+        if (collectionInfo == null || !collectionInfo.IsBsonDocument)
+            return NotFound(new { Success = false, Message = "Collection not found." });
+
+        var doc = collectionInfo.AsBsonDocument;
+
+        // options varsa BsonDocument olarak al, yoksa boş document döndür
+        BsonDocument optionsDoc = new BsonDocument();
+        if (doc.Contains("options") && doc["options"].IsBsonDocument)
+        {
+            optionsDoc = doc["options"].AsBsonDocument;
+        }
+
+        // validator varsa getir
+        BsonDocument validatorDoc = new BsonDocument();
+        if (optionsDoc.Contains("validator") && optionsDoc["validator"].IsBsonDocument)
+        {
+            validatorDoc = optionsDoc["validator"].AsBsonDocument;
+        }
+
+        return Ok(new
+        {
+            Success = true,
+            Validator = validatorDoc
+        });
+    }
+
+    // GET: /v1/collection-management/{collectionName}/indexes?dbName=TESTDB
+    [HttpGet("{collectionName}/indexes")]
+    public IActionResult GetIndexes([FromQuery] string dbName, string collectionName)
+    {
+        try
+        {
+            var database = _client.GetDatabase(dbName);
+            var collection = database.GetCollection<BsonDocument>(collectionName);
+
+            var indexes = collection.Indexes.List().ToList();
+            return Ok(new
+            {
+                Success = true,
+                Indexes = indexes.Select(i => BsonTypeMapper.MapToDotNetValue(i)).ToList()
+            });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { Success = false, Message = ex.Message });
+        }
+    }
+
+
+    // POST: /v1/collection-management/{collectionName}/indexes?dbName=TESTDB
+    [HttpPost("{collectionName}/indexes")]
+    public IActionResult CreateIndex([FromQuery] string dbName, string collectionName, [FromBody] JsonElement body)
+    {
+        try
+        {
+            var database = _client.GetDatabase(dbName);
+            var collection = database.GetCollection<BsonDocument>(collectionName);
+
+            // body içinde keys
+            var keysDict = JsonSerializer.Deserialize<Dictionary<string, int>>(body.GetProperty("keys").GetRawText());
+            var keys = new BsonDocument(keysDict!);
+
+            // options (varsa)
+            CreateIndexOptions? options = null;
+            if (body.TryGetProperty("options", out var optionsElement))
+            {
+                options = new CreateIndexOptions
+                {
+                    Unique = optionsElement.TryGetProperty("unique", out var u) && u.GetBoolean(),
+                    Name = optionsElement.TryGetProperty("name", out var n) ? n.GetString() : null
+                };
+            }
+
+            var model = new CreateIndexModel<BsonDocument>(new BsonDocumentIndexKeysDefinition<BsonDocument>(keys), options);
+            var result = collection.Indexes.CreateOne(model);
+
+            return Ok(new { Success = true, Message = "Index created successfully.", IndexName = result });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { Success = false, Message = ex.Message });
+        }
+    }
+
+
+
+    // DELETE: /v1/collection-management/{collectionName}/indexes/{indexName}?dbName=TESTDB
+    [HttpDelete("{collectionName}/indexes/{indexName}")]
+    public IActionResult DeleteIndex([FromQuery] string dbName, string collectionName, string indexName)
+    {
+        try
+        {
+            var database = _client.GetDatabase(dbName);
+            var collection = database.GetCollection<BsonDocument>(collectionName);
+
+            collection.Indexes.DropOne(indexName);
+
+            return Ok(new { Success = true, Message = $"Index '{indexName}' deleted successfully." });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { Success = false, Message = ex.Message });
+        }
+    }
+
+
+   
+
+
+
 }
