@@ -13,6 +13,7 @@
     "@monorepo/app": "workspace:*",
     "@monorepo/auth": "workspace:*",
     "@monorepo/core": "workspace:*",
+    "@monorepo/config": "workspace:*",
     "@monorepo/domain": "workspace:*",
     "@monorepo/errors": "workspace:*",
     "@monorepo/events": "workspace:*",

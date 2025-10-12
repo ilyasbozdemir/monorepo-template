@@ -4,12 +4,10 @@
   "description": "APP_NAME uygulamasında domain modelleri ve value object'lerin merkezi paketi. Tip güvenli ve yeniden kullanılabilir domain nesneleri sağlar.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-    "private": true,
+  "private": true,
   "scripts": {
     "test": "jest --passWithNoTests",
-"build": "rimraf --no-glob ./dist && tsc -p tsconfig.json && tsc-alias -p tsconfig.json",
-
-
+    "build": "rimraf --no-glob ./dist && tsc -p tsconfig.json && tsc-alias -p tsconfig.json",
     "build:publish": "pnpm run build && pnpm run publish:private",
     "deploy": "tsx scripts/deploy.ts"
   },
@@ -29,7 +27,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ilyasbozdemir/monorepo-template.git.git"
+    "url": "git+https://github.com/ilyasbozdemir/monorepo-template.git"
   },
   "keywords": [
     "core",

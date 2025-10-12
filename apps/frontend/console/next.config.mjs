@@ -28,6 +28,9 @@ const nextConfig = {
     MONGO_BASEURL_STAGING: process.env.MONGO_BASEURL_STAGING,
     MONGO_BASEURL_TEST: process.env.MONGO_BASEURL_TEST,
     MONGO_BASEURL_DEVELOPMENT: process.env.MONGO_BASEURL_DEVELOPMENT,
+
+
+    
   },
   productionBrowserSourceMaps: false,
 };
