@@ -22,6 +22,7 @@ public class ApiKeyMiddleware
 
         var apiKey = _config.GetValue<string>("API_SERVER_APIKEY");
 
+
         // Bearer varsa ayıklıyoruz
         var token = extractedApiKey.ToString().StartsWith("Bearer ")
             ? extractedApiKey.ToString().Substring("Bearer ".Length)

@@ -276,12 +276,14 @@ export function DatabaseLayout({ children }: DatabaseLayoutProps) {
       <aside className="hidden md:flex w-64 bg-card border-r border-gray-200 flex-col h-screen fixed left-0 top-0 z-10">
         <div className="p-4 border-b border-gray-200 flex items-center">
           <div className="flex items-center mr-2 justify-center w-8 h-8 rounded-full bg-primary text-primary-foreground font-bold text-xs">
-            Logo
+            <Link href={"/"}>Logo</Link>
           </div>
           <div>
-            <h1 className="text-lg font-bold text-foreground">My Org</h1>
+            <h1 className="text-lg font-bold text-foreground">
+              <Link href={"/"}>My Org</Link>
+            </h1>
             <p className="text-xs text-muted-foreground">
-              Veritabanı Yöneticisi
+              <>Veritabanı Yöneticisi</>
             </p>
           </div>
         </div>
@@ -561,35 +563,6 @@ export function DatabaseLayout({ children }: DatabaseLayoutProps) {
                 <span className="hidden sm:inline">Swagger API</span>
               </Button>
             </Link>
-            <Button
-              variant="outline"
-              size="sm"
-              className="whitespace-nowrap bg-transparent"
-            >
-              <RefreshCw className="h-4 w-4 mr-1" />
-              <span className="hidden sm:inline">Yenile</span>
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              className="whitespace-nowrap bg-transparent"
-              onClick={() => setShowExportModal(true)}
-            >
-              <Download className="h-4 w-4 mr-1" />
-              <span className="hidden sm:inline">Dışa Aktar</span>
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              className="whitespace-nowrap bg-transparent"
-              onClick={() => setShowImportModal(true)}
-            >
-              <Upload className="h-4 w-4 mr-1" />
-              <span className="hidden sm:inline">İçe Aktar</span>
-            </Button>
-            <Button variant="ghost" size="icon">
-              <Bell className="h-5 w-5" />
-            </Button>
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>

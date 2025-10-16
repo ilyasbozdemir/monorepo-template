@@ -26,11 +26,12 @@ export class DatabaseService {
    * @param dbName Hedef veritabanı adı
    * @param apiVersion API versiyonu (default: "v1")
    */
+
   constructor(
     client: AxiosInstance,
     endpoint: string,
     dbName: string,
-    apiVersion: string = "v1"
+    apiVersion: string = "v1",
   ) {
     this.client = client;
     this.dbName = dbName;
@@ -97,7 +98,7 @@ export class DatabaseService {
         } catch (err: any) {
           console.error("InsertMany failed:", err);
           throw new Error(
-            err.message || "Sunucuya insertMany işlemi başarısız oldu"
+            err.message || "Sunucuya insertMany işlemi başarısız oldu",
           );
         }
       },
@@ -109,7 +110,7 @@ export class DatabaseService {
        */
       update: async (
         id: string,
-        data: Record<string, any>
+        data: Record<string, any>,
       ): Promise<{ modifiedCount: number }> => {
         try {
           const path = CollectionApi.updateDocument(this.dbName, name, id);
@@ -164,7 +165,7 @@ export class DatabaseService {
        */
       getAll: async (
         page?: number,
-        size?: number
+        size?: number,
       ): Promise<{
         totalCount: number;
         page: number;
@@ -178,7 +179,7 @@ export class DatabaseService {
             this.dbName,
             name,
             page,
-            size
+            size,
           );
           const fullUrl = withFullUrl(this.endpoint, this.apiVersion, path);
 

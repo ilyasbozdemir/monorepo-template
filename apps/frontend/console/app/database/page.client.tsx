@@ -188,6 +188,10 @@ const PageClient: React.FC<PageClientProps> = ({}) => {
     }
   };
 
+
+  
+
+
   const loadDatabaseDetails = async () => {
     try {
       setLoading(true);
