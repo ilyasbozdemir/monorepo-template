@@ -167,18 +167,6 @@ export default function LobbyChat() {
           };
         }) || [];
 
-      const unique = Object.values(
-        list.reduce(
-          (acc, user) => {
-            acc[user.name] = user;
-            return acc;
-          },
-          {} as Record<string, OnlineUser>,
-        ),
-      );
-
-      console.log("✅ Unique Online users:", unique);
-
       console.log("Online users:", list);
       setOnlineUsers(list);
     });
@@ -530,13 +518,13 @@ export default function LobbyChat() {
               Realtime Server Playground
             </h1>
             <p className="text-muted-foreground mt-1">
-              {`Welcome ${username},`} 
-              <span className="font-semibold text-accent">{username}</span> •{" "}
-              {onlineUsers.length} users in playground
+              {`Welcome ${username},`}
+              <span className="font-semibold text-accent">
+                {username}
+              </span> • {onlineUsers.length} users in playground
             </p>
           </div>
           <div className="flex gap-2">
-        
             <Button
               onClick={handleLogout}
               variant="destructive"
@@ -548,8 +536,6 @@ export default function LobbyChat() {
           </div>
         </div>
 
-     
-
         <div className="flex-1 grid md:grid-cols-[1fr_300px] gap-6">
           <Card className="flex flex-col bg-card/80 backdrop-blur-sm border-2 overflow-hidden h-[800px]">
             <div className="p-4 border-b bg-secondary/50">
@@ -559,34 +545,71 @@ export default function LobbyChat() {
               ref={chatContainerRef}
               className="flex-1 overflow-y-auto p-4 space-y-4 scroll-smooth scrollbar-thin scrollbar-thumb-accent scrollbar-track-transparent"
             >
-              {messages.map((message) => (
-                <div
-                  key={message.id}
-                  className="group flex gap-3 animate-in fade-in slide-in-from-bottom-2"
-                >
-                  <Avatar
-                    className="w-10 h-10 border-2"
-                    style={{ borderColor: message.color }}
+              {messages.map((message) => {
+                const isOwn = message.user === username;
+
+                return (
+                  <div
+                    key={message.id}
+                    className={`group flex gap-3 animate-in fade-in slide-in-from-bottom-2 ${
+                      isOwn ? "justify-end text-right" : "justify-start"
+                    }`}
                   >
-                    <AvatarFallback
-                      style={{ backgroundColor: message.color, color: "white" }}
+                    {!isOwn && (
+                      <Avatar
+                        className="w-10 h-10 border-2"
+                        style={{ borderColor: message.color }}
+                      >
+                        <AvatarFallback
+                          style={{
+                            backgroundColor: message.color,
+                            color: "white",
+                          }}
+                        >
+                          {message.user[0]}
+                        </AvatarFallback>
+                      </Avatar>
+                    )}
+
+                    <div
+                      className={`max-w-[70%] rounded-2xl px-4 py-2 shadow-sm ${
+                        isOwn
+                          ? "bg-accent text-accent-foreground rounded-br-none"
+                          : "bg-secondary text-secondary-foreground rounded-bl-none"
+                      }`}
                     >
-                      {message.user[0]}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className="flex-1">
-                    <div className="flex items-baseline gap-2">
-                      <span className="font-semibold text-card-foreground">
-                        {message.user}
-                      </span>
-                      <span className="text-xs text-muted-foreground">
-                        {formatTime(message.timestamp)}
-                      </span>
+                      <div className="flex items-baseline gap-2"
+                      >
+                        {!isOwn && (
+                          <span className="font-semibold text-card-foreground">
+                            {message.user}
+                          </span>
+                        )}
+                        <span className="text-xs text-muted-foreground">
+                          {formatTime(message.timestamp)}
+                        </span>
+                      </div>
+                      <p className="mt-1 break-words">{message.text}</p>
                     </div>
-                    <p className="text-card-foreground mt-1">{message.text}</p>
+
+                    {isOwn && (
+                      <Avatar
+                        className="w-10 h-10 border-2"
+                        style={{ borderColor: message.color }}
+                      >
+                        <AvatarFallback
+                          style={{
+                            backgroundColor: message.color,
+                            color: "white",
+                          }}
+                        >
+                          {message.user[0]}
+                        </AvatarFallback>
+                      </Avatar>
+                    )}
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
             <div className="p-4 border-t bg-secondary/50">
