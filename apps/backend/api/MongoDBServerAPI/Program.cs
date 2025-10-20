@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using MongoDBServerAPI.Background;
 
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {
@@ -40,7 +41,14 @@ builder
 
 // Controller
 
+
+
 builder.Services.AddControllers();
+builder.Services.AddHttpClient();
+builder.Services.AddHealthChecks();
+
+
+
 builder.Services.AddScoped<RequestSessionFilter>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IRequestSessionContext, RequestSessionContext>();
@@ -51,6 +59,9 @@ builder.Services.AddScoped<IDatabaseService, DatabaseService>();
 builder.Services.AddScoped<IDatabaseAdminService, DatabaseAdminService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IStorageService, StorageService>();
+
+builder.Services.AddHostedService<MongoToElixirBridgeService>();
+
 
 
 builder.Services.AddEndpointsApiExplorer();
