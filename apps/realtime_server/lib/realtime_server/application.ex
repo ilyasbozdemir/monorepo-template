@@ -12,7 +12,8 @@ defmodule RealtimeServer.Application do
       {DNSCluster, query: Application.get_env(:realtime_server, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: RealtimeServer.PubSub},
       RealtimeServerWeb.Presence,
-      RealtimeServerWeb.Endpoint
+      RealtimeServerWeb.Endpoint,
+      {RealtimeServer.MongoDBChangeStream, []}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
