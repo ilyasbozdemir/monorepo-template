@@ -22,14 +22,16 @@ public class MongoToElixirBridgeService : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        var db = _client.GetDatabase("testdb");
-        var collection = db.GetCollection<BsonDocument>("messages");
-
+        // 🔹 Cluster-level değişiklikleri dinlemek için client üzerinden başlat
         var pipeline = new EmptyPipelineDefinition<ChangeStreamDocument<BsonDocument>>()
             .Match(_ => true);
 
-        using var cursor = await collection.WatchAsync(pipeline, cancellationToken: stoppingToken);
-        _logger.LogInformation("MongoDB Change Stream başlatıldı.");
+        _logger.LogInformation("MongoDB Cluster-level Change Stream başlatılıyor...");
+
+        // 🔹 Tüm veritabanlarını ve koleksiyonları izle
+        using var cursor = await _client.WatchAsync(pipeline, cancellationToken: stoppingToken);
+
+        _logger.LogInformation("MongoDB Cluster-level Change Stream aktif ✅");
 
         while (await cursor.MoveNextAsync(stoppingToken))
         {
@@ -37,21 +39,39 @@ public class MongoToElixirBridgeService : BackgroundService
             {
                 try
                 {
+                    // 🔹 DB ve koleksiyon ismini yakala
+                    var dbName = change.CollectionNamespace.DatabaseNamespace.DatabaseName;
+                    var collName = change.CollectionNamespace.CollectionName;
+
+                    // 🔹 FullDocument varsa toDictionary()’e çevir
                     var doc = change.FullDocument?.ToDictionary() ?? new Dictionary<string, object>();
+
+                    // 🔹 Elixir'e gönderilecek payload
                     var payload = new
                     {
                         event_type = change.OperationType.ToString(),
-                        collection = "messages",
+                        database = dbName,
+                        collection = collName,
                         data = doc
                     };
 
+                    // 🔹 Elixir API endpoint’ine gönder
                     var client = _httpFactory.CreateClient();
-                    var response = await client.PostAsJsonAsync("http://localhost:4000/api/events", payload, stoppingToken);
+                    var response = await client.PostAsJsonAsync(
+                        "http://localhost:4000/api/events",
+                        payload,
+                        stoppingToken
+                    );
 
                     if (response.IsSuccessStatusCode)
-                        _logger.LogInformation("Event gönderildi: {Type}", change.OperationType);
+                    {
+                        _logger.LogInformation("Event gönderildi: {Db}.{Coll} ({Type})",
+                            dbName, collName, change.OperationType);
+                    }
                     else
+                    {
                         _logger.LogWarning("Elixir'e event gönderilemedi: {Status}", response.StatusCode);
+                    }
                 }
                 catch (Exception ex)
                 {

@@ -63,6 +63,9 @@ builder.Services.AddScoped<IStorageService, StorageService>();
 builder.Services.AddHostedService<MongoToElixirBridgeService>();
 
 
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+
 
 builder.Services.AddEndpointsApiExplorer();
 
