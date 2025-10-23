@@ -2,7 +2,7 @@ type QueryParams = Record<string, string | number | boolean | undefined>;
 
 /**
  * Utility class to build URLs with path segments and query parameters.
- * Can be used to construct any API endpoints dynamically.
+ * Can be used to construct any API Uç Noktasıs dynamically.
  */
 export class UrlBuilder {
   private baseUrl: string;

@@ -194,7 +194,7 @@ export default function ApiGatewayPage() {
   }
 
   const handleRefresh = () => {
-    console.log("[v0] API istekleri yenileniyor...")
+    console.log("API istekleri yenileniyor...")
   }
 
   return (

@@ -194,7 +194,7 @@ export default function ActivityPage() {
   }
 
   const handleRefresh = () => {
-    console.log("[v0] Loglar yenileniyor...")
+    console.log("Loglar yenileniyor...")
   }
 
   return (

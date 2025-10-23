@@ -1,7 +1,7 @@
 {
   "name": "@monorepo/apifront",
   "version": "1.0.0",
-  "description": "Frontend tarafında API endpointlerini temsil eden paket; client-side ile backend API uyumluluğunu sağlar.",
+  "description": "Frontend tarafında API Uç Noktasılerini temsil eden paket; client-side ile backend API uyumluluğunu sağlar.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
     "private": true,

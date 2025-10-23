@@ -37,7 +37,7 @@ export default function SettingsPage() {
                 <Label htmlFor="timeout">Request Timeout (ms)</Label>
                 <Input id="timeout" type="number" placeholder="5000" defaultValue="5000" />
               </div>
-              <Button>Save API Settings</Button>
+              <Button>API Ayarlarını Kaydet</Button>
             </CardContent>
           </Card>
 

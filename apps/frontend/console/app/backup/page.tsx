@@ -672,7 +672,7 @@ export default function BackupManagementPage() {
 
                   {swaggerData.length > 0 && (
                     <div className="space-y-3">
-                      <h3 className="font-medium">API Endpoints</h3>
+                      <h3 className="font-medium">API Uç Noktasıs</h3>
                       {swaggerData.map((endpoint, index) => (
                         <div
                           key={index}
@@ -696,7 +696,7 @@ export default function BackupManagementPage() {
                       <div className="flex items-center justify-between mb-3">
                         <div className="flex items-center gap-2">
                           <Terminal className="h-4 w-4" />
-                          <span className="font-medium">API Endpoint Details</span>
+                          <span className="font-medium">API Uç Noktası Details</span>
                         </div>
                         <Button
                           variant="ghost"

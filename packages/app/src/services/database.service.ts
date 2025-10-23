@@ -22,7 +22,7 @@ export class DatabaseService {
   /**
    * DatabaseService oluşturur.
    * @param client Axios HTTP istemcisi
-   * @param endpoint API endpoint URL'si
+   * @param endpoint API Uç Noktası URL'si
    * @param dbName Hedef veritabanı adı
    * @param apiVersion API versiyonu (default: "v1")
    */

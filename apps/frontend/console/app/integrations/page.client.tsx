@@ -263,12 +263,12 @@ export default function IntegrationsPage() {
         ),
       )
       setShowConfigDialog(false)
-      console.log("[v0] Entegrasyon yapılandırıldı:", selectedIntegration.id)
+      console.log("Entegrasyon yapılandırıldı:", selectedIntegration.id)
     }
   }
 
   const handleTestConnection = (integration: Integration) => {
-    console.log("[v0] Bağlantı test ediliyor:", integration.id)
+    console.log("Bağlantı test ediliyor:", integration.id)
     setIntegrations(
       integrations.map((i) =>
         i.id === integration.id
